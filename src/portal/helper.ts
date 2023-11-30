@@ -2,6 +2,7 @@ import { MultiSeries, SingleSeries } from '@swimlane/ngx-charts';
 import { JSONPath } from 'jsonpath-plus';
 import { groupBy, omit } from 'lodash';
 import { ParseChartParam, SeriesType } from './interfaces/portal.interface';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export function transformString2Date(arr: any[]) {
   function isDate(str: string): boolean {
@@ -87,7 +88,7 @@ export function applyTranslator({ param }: { param: ParseChartParam }): ParseCha
   const seriesType: SeriesType = param.seriesType || SeriesType.SingleSeries;
 
   if (!seriesType || !(seriesType in defaultTranslatorFn)) {
-    throw new Error('seriesType error');
+    throw new HttpException('seriesType error', HttpStatus.BAD_REQUEST);
   }
 
   const translator = { ...defaultTranslator, ...(param.translator || {}) };

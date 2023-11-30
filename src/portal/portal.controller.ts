@@ -51,7 +51,8 @@ export class PortalController {
     const puredParam: ParseChartParam = applyTranslator({ param: parseParam });
     const chartParam: ChartParam = puredParam.chartParam;
     if (debug) {
-      return chartParam;
+      response.send(chartParam);
+      return;
     }
     this.getChart(new GetChartInputDto({ ...chartParam }), response);
   }

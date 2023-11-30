@@ -6,6 +6,7 @@ const WebpackBarPlugin = require('webpackbar');
  * @type {import('webpack').Configuration}
  */
 module.exports = {
+  devtool: 'source-map',
   plugins: [
     new WebpackBarPlugin(),
     new DefinePlugin({
