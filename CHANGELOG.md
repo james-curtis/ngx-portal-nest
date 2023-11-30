@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/james-curtis/ngx-portal-nest/compare/v0.1.4...v0.1.5) (2023-11-30)
+
+
+### Bug Fixes
+
+* 修改 swagger AnyChartParamDto example ([86be13c](https://github.com/james-curtis/ngx-portal-nest/commit/86be13cd07e664d3ba70bb4b853766c61e163149))
+
 ## [0.1.4](https://github.com/james-curtis/ngx-portal-nest/compare/v0.1.3...v0.1.4) (2023-11-30)
 
 
