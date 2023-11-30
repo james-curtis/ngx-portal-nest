@@ -80,11 +80,17 @@ export enum SeriesType {
 
 export const ChartType2SeriesType: Partial<Record<ChartType, SeriesType>> = {
   [ChartType.PieChartComponent]: SeriesType.SingleSeries,
-  [ChartType.BarVertical2DComponent]: SeriesType.SingleSeries,
-  [ChartType.BarVerticalStackedComponent]: SeriesType.SingleSeries,
-  [ChartType.BarVerticalNormalizedComponent]: SeriesType.SingleSeries,
-  [ChartType.NumberCardComponent]: SeriesType.SingleSeries,
+
+  [ChartType.BarVerticalComponent]: SeriesType.SingleSeries,
+  [ChartType.BarVertical2DComponent]: SeriesType.MultiSeries,
+  [ChartType.BarVerticalStackedComponent]: SeriesType.MultiSeries,
+  [ChartType.BarVerticalNormalizedComponent]: SeriesType.MultiSeries,
+
   [ChartType.BarHorizontalComponent]: SeriesType.SingleSeries,
+  [ChartType.BarHorizontalStackedComponent]: SeriesType.MultiSeries,
+  [ChartType.BarHorizontalNormalizedComponent]: SeriesType.MultiSeries,
+
+  [ChartType.NumberCardComponent]: SeriesType.SingleSeries,
 };
 
 export interface ParseChartParam {

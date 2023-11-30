@@ -45,9 +45,8 @@ export class PortalController {
     @Query('debug') debug: boolean = false,
     @Res() response: Response,
   ) {
-    if (!parseParam.seriesType) {
+    if (!parseParam.seriesType)
       parseParam.seriesType = ChartType2SeriesType[parseParam.chartParam.type];
-    }
     const puredParam: ParseChartParam = applyTranslator({ param: parseParam });
     const chartParam: ChartParam = puredParam.chartParam;
     if (debug) {
