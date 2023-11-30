@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/james-curtis/ngx-portal-nest/compare/v0.1.3...v0.1.4) (2023-11-30)
+
+
+### Bug Fixes
+
+* 修改 swagger translator example ([12e9337](https://github.com/james-curtis/ngx-portal-nest/commit/12e933775dc9ceefa1ee403e2faeaa57152959de))
+
 ## [0.1.2](https://github.com/james-curtis/ngx-portal-nest/compare/v0.1.1...v0.1.2) (2023-11-30)
 
 
