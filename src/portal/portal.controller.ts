@@ -1,10 +1,20 @@
-import { Body, Controller, Logger, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Logger,
+  Post,
+  Query,
+  Res,
+} from '@nestjs/common';
 import { GetChartInputDto } from './dto/get-chart-input.dto';
 import { PortalService } from './portal.service';
 import { ParseInputDto } from './dto/parse-input.dto';
 import { applyTranslator, isMultiSeries, transformString2Date } from './helper';
 import { ChartParam, ChartType2SeriesType, ParseChartParam } from './interfaces/portal.interface';
 import { ApiQuery } from '@nestjs/swagger';
+import { Response } from 'express';
 
 @Controller()
 export class PortalController {
@@ -12,21 +22,29 @@ export class PortalController {
 
   constructor(private readonly portalService: PortalService) {}
 
-  @Post('getChart')
-  async getChart(@Body() chartInput: GetChartInputDto) {
+  @Post(['getChart', 'portal'])
+  async getChart(@Body() chartInput: GetChartInputDto, @Res() response: Response) {
     if (!chartInput.ngxOptions?.results)
-      throw new Error('chartInput.ngxOptions.results can not be null');
+      throw new HttpException(
+        'chartInput.ngxOptions.results can not be null',
+        HttpStatus.BAD_REQUEST,
+      );
     const res = chartInput.ngxOptions.results;
     transformString2Date(res);
     isMultiSeries(res) && res.map((e) => transformString2Date(e.series));
 
     const img = await this.portalService.getChart(chartInput);
-    return img;
+    response.type(img.type);
+    response.send(Buffer.from(await img.arrayBuffer()));
   }
 
   @ApiQuery({ name: 'debug', enum: ['true', 'false'], required: false })
   @Post('parse')
-  parse(@Body() parseParam: ParseInputDto, @Query('debug') debug: boolean = false) {
+  parse(
+    @Body() parseParam: ParseInputDto,
+    @Query('debug') debug: boolean = false,
+    @Res() response: Response,
+  ) {
     if (!parseParam.seriesType) {
       parseParam.seriesType = ChartType2SeriesType[parseParam.chartParam.type];
     }
@@ -35,6 +53,6 @@ export class PortalController {
     if (debug) {
       return chartParam;
     }
-    this.getChart(new GetChartInputDto({ ...chartParam }));
+    this.getChart(new GetChartInputDto({ ...chartParam }), response);
   }
 }
