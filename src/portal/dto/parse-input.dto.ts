@@ -18,7 +18,13 @@ export class ParseInputDto implements ParseChartParam {
   seriesType: SeriesType = SeriesType.SingleSeries;
   @ApiProperty({
     nullable: true,
-    example: null,
+    example: {
+      name: '$..bucketing_attributes[0]..value',
+      series: {
+        name: '$..bucketing_attributes[1]..value',
+        value: '$..counters..result.value',
+      },
+    },
     required: false,
     description: 'jsonpath 对应关系',
     oneOf: [

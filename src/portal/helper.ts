@@ -91,10 +91,10 @@ export function applyTranslator({ param }: { param: ParseChartParam }): ParseCha
     throw new HttpException('seriesType error', HttpStatus.BAD_REQUEST);
   }
 
-  const translator = { ...defaultTranslator, ...(param.translator || {}) };
+  const translator = param.translator || defaultTranslator[seriesType];
   const transFn: TranslatorFn = param.translatorFn
     ? (new Function(param.translatorFn) as TranslatorFn)
     : defaultTranslatorFn[seriesType]!;
-  param.chartParam.ngxOptions!.results = transFn(results, translator[seriesType]);
+  param.chartParam.ngxOptions!.results = transFn(results, translator);
   return param;
 }
