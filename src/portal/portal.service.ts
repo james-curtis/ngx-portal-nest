@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ChartParam, SvgApiParam } from './interfaces/portal.interface';
+import { stringify } from 'superjson';
 
 @Injectable()
 export class PortalService {
@@ -18,7 +19,6 @@ export class PortalService {
 
   async getChart(chartParam: ChartParam) {
     this.logger.log(`requesting ${this.ngxRenderUrl}`);
-    const { stringify } = await import('superjson');
     let response = await fetch(this.ngxRenderUrl, {
       method: 'POST',
       body: stringify(chartParam),

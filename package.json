@@ -29,7 +29,7 @@
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1",
-    "superjson": "^2.2.1"
+    "superjson": "^1.13.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
