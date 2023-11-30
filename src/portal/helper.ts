@@ -1,6 +1,6 @@
 import { MultiSeries, SingleSeries } from '@swimlane/ngx-charts';
 import { JSONPath } from 'jsonpath-plus';
-import { groupBy, omit } from 'lodash-es';
+import { groupBy, omit } from 'lodash';
 import { ParseChartParam, SeriesType } from './interfaces/portal.interface';
 
 export function transformString2Date(arr: any[]) {
@@ -44,12 +44,12 @@ export const defaultTranslator: Partial<Record<SeriesType, any>> = {
   },
 };
 
-export type TranslatorFn = (chartResults: any) => any;
+export type TranslatorFn = (chartResults: any, translator?: any) => any;
 
-export function defaultSingleSeriesTranslator(
+export const defaultSingleSeriesTranslator: TranslatorFn = (
   chartResults: any,
   translator: any = defaultTranslator[SeriesType.SingleSeries],
-): any {
+): any => {
   const transKeys = Object.keys(translator);
   const matrix = transKeys.map((type: string) =>
     JSONPath({ path: translator[type], json: chartResults }),
@@ -60,19 +60,23 @@ export function defaultSingleSeriesTranslator(
   return zip(...matrix).map((e) => {
     return Object.fromEntries(zip(transKeys, e));
   });
-}
+};
 
 export const defaultTranslatorFn: Partial<Record<SeriesType, TranslatorFn>> = {
   [SeriesType.SingleSeries]: defaultSingleSeriesTranslator,
-  [SeriesType.MultiSeries]: (chartResults: any) => {
+  [SeriesType.MultiSeries]: (
+    chartResults: any,
+    translator: any = defaultTranslator[SeriesType.MultiSeries],
+  ) => {
+    const GROUP_NAME = 'groupName';
     const allData = defaultSingleSeriesTranslator(chartResults, {
-      groupName: defaultTranslator[SeriesType.MultiSeries].name,
-      ...defaultTranslator[SeriesType.MultiSeries].series,
+      [GROUP_NAME]: translator.name,
+      ...translator.series,
     });
-    const grouped = groupBy(allData, 'groupName');
+    const grouped = groupBy(allData, GROUP_NAME);
     return Object.keys(grouped).map((groupName: string) => ({
       name: groupName,
-      series: grouped[groupName].map((e) => omit(e, 'groupName')),
+      series: grouped[groupName].map((e) => omit(e, GROUP_NAME)),
     }));
   },
 };
@@ -86,13 +90,10 @@ export function applyTranslator({ param }: { param: ParseChartParam }): ParseCha
     throw new Error('seriesType error');
   }
 
+  const translator = { ...defaultTranslator, ...(param.translator || {}) };
   const transFn: TranslatorFn = param.translatorFn
     ? (new Function(param.translatorFn) as TranslatorFn)
     : defaultTranslatorFn[seriesType]!;
-  param.chartParam.ngxOptions!.results = transFn(results);
+  param.chartParam.ngxOptions!.results = transFn(results, translator[seriesType]);
   return param;
-}
-
-export function isString(x: any): x is string {
-  return typeof x === 'string';
 }

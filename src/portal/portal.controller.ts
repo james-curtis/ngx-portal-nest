@@ -1,9 +1,10 @@
-import { Body, Controller, Logger, Param, Post } from '@nestjs/common';
+import { Body, Controller, Logger, Post, Query } from '@nestjs/common';
 import { GetChartInputDto } from './dto/get-chart-input.dto';
 import { PortalService } from './portal.service';
 import { ParseInputDto } from './dto/parse-input.dto';
 import { applyTranslator, isMultiSeries, transformString2Date } from './helper';
 import { ChartParam, ChartType2SeriesType, ParseChartParam } from './interfaces/portal.interface';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller()
 export class PortalController {
@@ -23,8 +24,9 @@ export class PortalController {
     return img;
   }
 
+  @ApiQuery({ name: 'debug', enum: ['true', 'false'], required: false })
   @Post('parse')
-  parse(@Body() parseParam: ParseInputDto, @Param('debug') debug: boolean) {
+  parse(@Body() parseParam: ParseInputDto, @Query('debug') debug: boolean = false) {
     if (!parseParam.seriesType) {
       parseParam.seriesType = ChartType2SeriesType[parseParam.chartParam.type];
     }
