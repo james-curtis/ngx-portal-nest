@@ -30,6 +30,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'off',
         '@typescript-eslint/ban-types': 'off',
         '@typescript-eslint/no-array-constructor': 'off',
+        '@typescript-eslint/no-inferrable-types': 'off',
       },
     },
     {
