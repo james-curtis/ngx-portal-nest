@@ -10,4 +10,10 @@ export class HealthController {
   live(@Res() res: Response): Response<void> {
     return res.status(HttpStatus.NO_CONTENT).send();
   }
+
+  @ApiResponse({ status: HttpStatus.NO_CONTENT, description: 'if ready' })
+  @Get('ready')
+  ready(@Res() res: Response): Response<void> {
+    return res.status(HttpStatus.NO_CONTENT).send();
+  }
 }
