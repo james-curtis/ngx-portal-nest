@@ -8,7 +8,7 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
-import { GetChartInputDto } from './dto/get-chart-input.dto';
+import { ChartParamInputDto } from './dto/chart-param-input.dto';
 import { PortalService } from './portal.service';
 import { ParseInputDto } from './dto/parse-input.dto';
 import { applyTranslator, isMultiSeries, transformString2Date } from './helper';
@@ -22,8 +22,8 @@ export class PortalController {
 
   constructor(private readonly portalService: PortalService) {}
 
-  @Post(['getChart', 'portal'])
-  async getChart(@Body() chartInput: GetChartInputDto, @Res() response: Response) {
+  @Post(['portal'])
+  async getChart(@Body() chartInput: ChartParamInputDto, @Res() response: Response) {
     if (!chartInput.ngxOptions?.results)
       throw new HttpException(
         'chartInput.ngxOptions.results can not be null',
@@ -54,6 +54,6 @@ export class PortalController {
       response.send(chartParam);
       return;
     }
-    this.getChart(new GetChartInputDto({ ...chartParam }), response);
+    this.getChart(new ChartParamInputDto({ ...chartParam }), response);
   }
 }

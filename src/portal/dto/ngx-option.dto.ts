@@ -1,17 +1,18 @@
-import { NgxOptions } from '../interfaces/portal.interface';
 import { MultiSeries, SingleSeries } from '@swimlane/ngx-charts';
+import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
+import { DataItemDto } from './data-item.dto';
+import { SeriesDto } from './series.dto';
+import { BaseNgxOptionDto } from './base-ngx-option.dto';
+import { multi } from '../swagger/example-data';
 
-export class NgxOptionDto implements NgxOptions {
-  [key: string]: unknown;
-  labels: boolean;
-  legend: boolean;
+export class NgxOptionDto extends BaseNgxOptionDto {
+  @ApiProperty({
+    example: multi,
+    oneOf: [
+      { type: 'array', items: { $ref: getSchemaPath(DataItemDto) } },
+      { type: 'array', items: { $ref: getSchemaPath(SeriesDto) } },
+    ],
+    description: '图表数据',
+  })
   results: MultiSeries | SingleSeries;
-  showGridLines: boolean;
-  showXAxisLabel: boolean;
-  showYAxisLabel: boolean;
-  view: [number, number];
-  xAxis: boolean;
-  xAxisLabel: string;
-  yAxis: boolean;
-  yAxisLabel: string;
 }

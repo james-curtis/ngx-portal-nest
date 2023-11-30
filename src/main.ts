@@ -9,11 +9,7 @@ async function bootstrap() {
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
 
-  const config = new DocumentBuilder()
-    .setTitle('ngx-portal-nest')
-    .setDescription('The ngx-portal-nest API description')
-    .setVersion('1.0')
-    .build();
+  const config = new DocumentBuilder().setTitle('ngx-portal-nest').build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 

@@ -16,7 +16,7 @@ export interface MultiSeriesValueDefine {
 
 export type ValueDefine = SingleSeriesValueDefine | MultiSeriesValueDefine;
 
-export type NgxOptions = {
+export interface NgxOptions {
   [key: string]: unknown;
   results: MultiSeries | SingleSeries;
   view: [number, number];
@@ -29,7 +29,11 @@ export type NgxOptions = {
   yAxisLabel: string;
   xAxis: boolean;
   yAxis: boolean;
-};
+}
+
+export interface AnyNgxOptions extends NgxOptions {
+  results: any;
+}
 
 export enum ChartType {
   AdvancedPieChartComponent = 'AdvancedPieChartComponent',
@@ -62,10 +66,7 @@ export interface ChartParam {
 }
 
 export interface AnyChartParam extends ChartParam {
-  ngxOptions?: {
-    [key: string]: unknown;
-    results: any;
-  };
+  ngxOptions?: AnyNgxOptions;
 }
 
 export enum SeriesType {
