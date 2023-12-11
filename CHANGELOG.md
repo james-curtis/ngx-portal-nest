@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.6](https://github.com/james-curtis/ngx-portal-nest/compare/v0.1.5...v0.1.6) (2023-12-11)
+
+
+### Bug Fixes
+
+* change env port ([da4f80c](https://github.com/james-curtis/ngx-portal-nest/commit/da4f80cf225a11085e2cc90ed9e3ce4c245a7d21))
+* change env port ([eb72867](https://github.com/james-curtis/ngx-portal-nest/commit/eb728679da5755d56585c2b04614996daf518394))
+* work on wsl, unable to use soft link ([edb7b57](https://github.com/james-curtis/ngx-portal-nest/commit/edb7b5733c27bcbbb7fc5f086eefbcdc2ce4dc05))
+* 修改 env 导入方式 ([0e574ba](https://github.com/james-curtis/ngx-portal-nest/commit/0e574ba0a8b7e9b65eb660353ac7e78732542573))
+
 ## [0.1.5](https://github.com/james-curtis/ngx-portal-nest/compare/v0.1.4...v0.1.5) (2023-11-30)
 
 
