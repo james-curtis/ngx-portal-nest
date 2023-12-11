@@ -17,4 +17,4 @@ COPY --from=builder /app/dist/ ./dist/
 RUN pnpm i
 EXPOSE 3001
 HEALTHCHECK CMD curl http://localhost:3001/health/live -f || exit 1
-ENTRYPOINT node dist/main.js
+ENTRYPOINT npm run start:prod

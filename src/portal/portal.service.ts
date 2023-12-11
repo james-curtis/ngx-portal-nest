@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { ChartParam, SvgApiParam } from './interfaces/portal.interface';
 import { stringify } from 'superjson';
+import * as process from 'process';
 
 @Injectable()
 export class PortalService {
@@ -9,11 +9,9 @@ export class PortalService {
   private readonly svg2bitmapUrl: string;
   private readonly logger = new Logger(PortalService.name);
 
-  constructor(private readonly configService: ConfigService) {
-    const ngxRenderHost = this.configService.get('ngxRenderHost', 'localhost:4200');
-    const svg2bitmapHost = this.configService.get('svg2bitmapHost', 'localhost:3000');
-    this.ngxRenderUrl = `http://${ngxRenderHost}/home`;
-    this.svg2bitmapUrl = `http://${svg2bitmapHost}/svg2bitmap`;
+  constructor() {
+    this.ngxRenderUrl = `http://${process.env.ngxRenderHost}/home`;
+    this.svg2bitmapUrl = `http://${process.env.svg2bitmapHost}/svg2bitmap`;
   }
 
   async getChart(chartParam: ChartParam) {
