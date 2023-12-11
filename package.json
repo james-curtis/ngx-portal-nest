@@ -4,17 +4,13 @@
   "version": "0.1.5",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "npx env-cmd -f .env.dev nest start",
-    "start:dev": "npx env-cmd -f .env.dev nest start --watch",
-    "start:debug": "npx env-cmd -f .env.dev nest start --debug --watch",
+    "dev": "npx env-cmd -f .env.dev nest start --watch",
     "start:prod": "npx env-cmd -f .env.prod node dist/main",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/jest/bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prepare": "npx husky install",
-    "clean": "npx rimraf dist"
+    "prepare": "npx husky install"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
